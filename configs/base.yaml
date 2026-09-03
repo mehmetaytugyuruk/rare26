@@ -1,0 +1,27 @@
+# configs/base.yaml
+# Merge parent, not an experiment: every other config layers onto this one.
+
+experiment_name: "base"
+
+model:
+  name: "resnet50"
+  pretrained: "imagenet"        # "imagenet" | "none" | <checkpoint path>
+
+data:
+  img_size: 224
+  split_mode: "group_cv"        # "group_cv" | "full"
+  n_folds: 5
+
+training:
+  epochs: 30
+  batch_size: 32
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  optimizer: "adamw"
+  scheduler: "cosine"
+
+loss:
+  name: "bce"
+  pos_weight: 18.6
+
+seeds: [45, 46, 47]

@@ -1,0 +1,22 @@
+# configs/resnet50_full.yaml
+# Backbone: ResNet-50, initialised from GastroNet-pretrained weights.
+# Trains on all 3,095 images; no fold split is held out.
+# Checkpoints are saved at epochs 16, 20, 24, and 28.
+
+experiment_name: "resnet50_gastronet_mixup_pw186_full"
+
+model:
+  pretrained: "weights/RN50_Billion-Scale-SWSL%2BGastroNet-5M_DINOv1.pth"
+
+data:
+  split_mode: "full"
+
+training:
+  lr: 5.0e-5
+  balanced_mixup_alpha: 0.2
+  checkpoint_epochs: [16, 20, 24, 28]
+
+loss:
+  pos_weight: 18.6
+
+seeds: [45, 46, 47]

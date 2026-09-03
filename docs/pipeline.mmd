@@ -1,0 +1,41 @@
+%%{init: {"theme":"base","themeVariables":{
+  "background":"#FFFFFF",
+  "primaryColor":"#EEF7F6",
+  "primaryTextColor":"#12201F",
+  "primaryBorderColor":"#0E7A78",
+  "secondaryColor":"#EEF7F6",
+  "secondaryTextColor":"#12201F",
+  "secondaryBorderColor":"#0E7A78",
+  "tertiaryColor":"#EEF7F6",
+  "tertiaryTextColor":"#12201F",
+  "tertiaryBorderColor":"#0E7A78",
+  "lineColor":"#5B6B70",
+  "textColor":"#12201F",
+  "edgeLabelBackground":"#FFFFFF",
+  "clusterBkg":"#E3F1EF",
+  "clusterBorder":"#0E7A78",
+  "titleColor":"#0E7A78",
+  "fontFamily":"IBM Plex Sans, sans-serif",
+  "fontSize":"13px"
+}}}%%
+flowchart TD
+    subgraph row1 [" "]
+        direction LR
+        A["3,095 endoscopy images<br/>2,937 NDBE &middot; 158 NEO"] --> B["DINOv2 grouping<br/>&rarr; group_id &middot; 2,848 groups"] --> C["Near-duplicate-grouped splits<br/>pinned in data_manifest.csv"]
+    end
+
+    subgraph row2 [" GastroNet-5M init &middot; weighted BCE &middot; Balanced-MixUp &middot; fixed-epoch checkpoints "]
+        direction RL
+        E["Full-data arm<br/>ResNet-50 &times;12 + ViT-S/16 &times;12"]
+        E ~~~ D["5-fold CV arm<br/>ResNet-50 &times;15 + ViT-S/16 &times;15"]
+    end
+
+    subgraph row3 [" "]
+        direction LR
+        F["54 checkpoints<br/>27 ResNet-50 + 27 ViT-S/16"] --> G["Equal-weight sigmoid mean<br/>inference.py"] --> H["PPV@90Recall prediction"]
+    end
+
+    C --> E
+    C --> D
+    D --> F
+    E --> F

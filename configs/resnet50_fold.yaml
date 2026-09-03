@@ -1,0 +1,23 @@
+# configs/resnet50_fold.yaml
+# Backbone: ResNet-50, initialised from GastroNet-pretrained weights.
+# 5-fold cross-validation (grouped, stratified), 3 seeds.
+# Balanced-MixUp (Galdran et al., MICCAI 2021), alpha 0.2; pos_weight 18.6.
+# Checkpoints are saved at epochs 20, 25, and 30.
+
+experiment_name: "resnet50_gastronet_mixup_pw186"
+
+model:
+  pretrained: "weights/RN50_Billion-Scale-SWSL%2BGastroNet-5M_DINOv1.pth"
+
+data:
+  n_folds: 5
+
+training:
+  lr: 5.0e-5
+  balanced_mixup_alpha: 0.2
+  checkpoint_epochs: [20, 25, 30]
+
+loss:
+  pos_weight: 18.6
+
+seeds: [45, 46, 47]

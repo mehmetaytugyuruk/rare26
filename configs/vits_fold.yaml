@@ -1,0 +1,26 @@
+# configs/vits_fold.yaml
+# Backbone: ViT-S/16, initialised from GastroNet-pretrained weights.
+# 5-fold cross-validation (grouped, stratified), 3 seeds.
+# lr 1e-5 with a 3-epoch warmup.
+# Balanced-MixUp (Galdran et al., MICCAI 2021), alpha 0.2; pos_weight 18.6.
+# Checkpoints are saved at epochs 10, 15, 20, 25, and 30.
+
+experiment_name: "vits_gastronet_mixup_pw186"
+
+model:
+  name: "vit_small_patch16_224"
+  pretrained: "weights/VITS_GastroNet-5M_DINOv1.pth"
+
+data:
+  n_folds: 5
+
+training:
+  lr: 1.0e-5
+  warmup_epochs: 3
+  balanced_mixup_alpha: 0.2
+  checkpoint_epochs: [10, 15, 20, 25, 30]
+
+loss:
+  pos_weight: 18.6
+
+seeds: [45, 46, 47]
