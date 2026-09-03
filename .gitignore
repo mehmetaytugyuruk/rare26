@@ -34,3 +34,4 @@ venv/
 *.npy
 
 papers/
+/rare_report.pdf
